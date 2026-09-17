@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="it">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Cosmo Pasta Catania — Fresca. Espressa. Spaziale.">
+    <title>Cosmo Pasta Web · Catania</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="nav">
+    <a class="logo" href="#top">✦ COSMO <b>PASTA</b></a>
+    <nav>
+        <a href="#mission">MISSIONE</a>
+        <a href="#menu">MENU</a>
+        <a href="#fresh">FRESH LAB</a>
+        <a href="#contact">CONTATTI</a>
+    </nav>
+    <a class="order" href="https://glovoapp.com/it/it/catania-acireale/stores/cosmo-pasta-fresca-espressa-spaziale-cat" target="_blank">ORDINA ↗</a>
+    <button class="hamb" type="button">☰</button>
+</header>
+
+<main>
+<section class="hero" id="top">
+    <div class="copy">
+        <small>CATANIA · OGNINA · PIAZZA MANCINI BATTAGLIA</small>
+        <h1>PASTA<br><span>IN ORBITA.</span></h1>
+        <p>Fresca. Espressa. Spaziale.</p>
+        <a class="btn" href="#menu">SCOPRI IL MENU</a>
+        <a class="btn ghost" href="#mission">LA MISSIONE ↓</a>
+    </div>
+    <div class="hero-img">
+        <img src="{{ url_for('static', filename='images/' ~ menu[0]['items'][0]['image']) }}" alt="Pasta Cosmo Pasta">
+        <b>MISSION #001</b>
+    </div>
+</section>
+
+<section class="mission" id="mission">
+    <div class="label">01 / MISSIONE</div>
+    <div>
+        <h2>TRADIZIONE<br><span>×</span> FUTURO.</h2>
+        <p>Cosmo Pasta nasce dal sogno di Ciccio e Mattia, due cugini uniti dalla passione per la pasta. Il progetto unisce tradizione siciliana, ingredienti selezionati e un immaginario spaziale pop.</p>
+        <p>La pasta è protagonista: fresca, preparata ogni giorno e cucinata espressa.</p>
+    </div>
+    <div class="card">
+        ✦
+        <small>OUR CODE</small>
+        <strong>FARINE BIOLOGICHE<br>SICILIANE</strong>
+        <small>+ UOVA BIO · QUALITÀ · CREATIVITÀ</small>
+    </div>
+</section>
+
+<section class="break">
+    <div>
+        <small>FRESH PASTA LAB</small>
+        <h2>MADE<br>DAILY.</h2>
+        <p>Direttamente dal laboratorio spaziale alla tua tavola.</p>
+    </div>
+</section>
+
+<section class="menu" id="menu">
+    <div class="head">
+        <div>
+            <div class="label">02 / MENU DI BORDO</div>
+            <h2>SCEGLI LA TUA<br><span>MISSIONE.</span></h2>
+        </div>
+        <p>Pasta fresca espressa, pasta da portare a casa, drink e birre. I prezzi possono cambiare tra locale e delivery.</p>
+    </div>
+
+    <div class="filters">
+        {% for group in menu %}
+            <button class="filter {% if loop.first %}active{% endif %}" data-category="{{ loop.index0 }}">
+                {{ group['category'] }}
+            </button>
+        {% endfor %}
+    </div>
+
+    <div class="grid">
+        {% for group in menu %}
+            {% set category_index = loop.index0 %}
+            {% for item in group['items'] %}
+                <article class="dish" data-category="{{ category_index }}">
+                    {% if item['image'] %}
+                        <img src="{{ url_for('static', filename='images/' ~ item['image']) }}" alt="{{ item['name'] }}" loading="lazy">
+                    {% else %}
+                        <div class="placeholder">✦</div>
+                    {% endif %}
+                    <div>
+                        <h3>{{ item['name'] }} <strong>€{{ "%.2f"|format(item['price']) }}</strong></h3>
+                        <p>{{ item['description'] }}</p>
+                        <button class="add" data-name="{{ item['name'] }}" data-price="{{ item['price'] }}">+ AGGIUNGI</button>
+                    </div>
+                </article>
+            {% endfor %}
+        {% endfor %}
+    </div>
+
+    <p class="note">Prezzi indicativi: verifica sempre prezzi e disponibilità sul canale di acquisto prima dell'ordine.</p>
+</section>
+
+<section class="fresh" id="fresh">
+    <img src="{{ url_for('static', filename='images/' ~ menu[0]['items'][0]['image']) }}" alt="Pistacosmo">
+    <div>
+        <div class="label">03 / FRESH LAB</div>
+        <h2>PISTACOSMO.<br><span>GREEN ENERGY.</span></h2>
+        <p>Pesto di pistacchio siciliano, guanciale di Norcia croccante, stracciatella fresca e polvere di pistacchio.</p>
+        <a href="#menu">VEDI TUTTI I PIATTI →</a>
+    </div>
+</section>
+
+<section class="services">
+    <div class="label">04 / SERVIZI</div>
+    <div class="services-grid">
+        <div><b>01</b><h3>TAKE AWAY</h3><p>Passa da Cosmo Pasta e porta la tua missione a casa.</p></div>
+        <div><b>02</b><h3>DELIVERY</h3><p>Ordina tramite Glovo e ricevi i nostri piatti direttamente a casa.</p>
+            <a href="https://glovoapp.com/it/it/catania-acireale/stores/cosmo-pasta-fresca-espressa-spaziale-cat" target="_blank">ORDINA SU GLOVO ↗</a>
+        </div>
+        <div><b>03</b><h3>PASTA SFUSA</h3><p>Rigatini, spaghettoni, paccheri e tortellini spaziali da cucinare a casa.</p></div>
+    </div>
+</section>
+
+<section class="contact" id="contact">
+    <div>
+        <div class="label">05 / BASE STATION</div>
+        <h2>CI VEDIAMO<br><span>A CATANIA.</span></h2>
+        <a class="phone" href="tel:+393519878796">{{ restaurant.phone }}</a>
+    </div>
+    <div class="info">
+        <p><b>INDIRIZZO</b><br>{{ restaurant.address }}</p>
+        <p><b>ORARI</b><br>{{ restaurant.hours }}</p>
+        <p><b>EMAIL</b><br><a href="mailto:{{ restaurant.email }}">{{ restaurant.email }}</a></p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Piazza+Mancini+Battaglia+22+Catania" target="_blank">MAPPA ↗</a>
+        <a href="{{ restaurant.website }}" target="_blank">SITO UFFICIALE ↗</a>
+    </div>
+</section>
+</main>
+
+<div class="fab" id="openCart">CART <span id="count">0</span></div>
+
+<aside class="cart" id="cart">
+    <header>MISSION CART <button id="close" type="button">×</button></header>
+    <div id="items"></div>
+    <h3>TOTALE <span id="total">€0.00</span></h3>
+    <a class="order" href="https://glovoapp.com/it/it/catania-acireale/stores/cosmo-pasta-fresca-espressa-spaziale-cat" target="_blank">COMPLETA SU GLOVO ↗</a>
+</aside>
+
+<footer>
+    <strong>✦ COSMO PASTA WEB</strong>
+    <span>Fresca. Espressa. Spaziale. · Catania</span>
+    <span>© 2026</span>
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
